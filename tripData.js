@@ -106,29 +106,79 @@ const tripData = {
             },
           ],
         },
-        // {
-        //   time: '16:00',
-        //   title: '櫛田神社與博多舊市街',
-        //   category: '景點',
-        //   location: '櫛田神社',
-        //   note: '輕鬆散步，保留彈性吃點心。',
-        //   image: '',
-        //   links: [
-        //     {
-        //       label: 'Google Maps',
-        //       url: 'https://www.google.com/maps/search/?api=1&query=Kushida+Shrine+Fukuoka',
-        //     },
-        //   ],
-        // },
-        // {
-        //   time: '18:30',
-        //   title: '晚餐：博多美食',
-        //   category: '美食',
-        //   location: '博多 / 中洲',
-        //   note: '可改成牛腸鍋、水炊雞或拉麵。',
-        //   image: '',
-        //   links: [],
-        // },
+        {
+          time: '15:00',
+          title: '飯店Check In + 小逛街',
+          category: '住宿',
+          location: '博多車站、飯店、Nintendo FUKUOKA',
+          openingHours: 'Nintendo FUKUOKA 10:00-20:00',
+          note: '準備去公園玩的食物(微野餐)、Nintendo FUKUOKA買皮克敏、飯店check in',
+          image: '',
+          links: [
+            {
+              label: 'Nintendo FUKUOKA',
+              url: 'https://maps.app.goo.gl/sZnnKRKHbyVgpPMX9',
+            },
+            {
+              label: 'Dacomecca 麵包店',
+              url: 'https://maps.app.goo.gl/bDU4MWogjXCnbUGG7',
+            },
+          ],
+        },
+        {
+          time: '16:00',
+          title: '大濠公園 & 福岡市美術館',
+          category: '景點',
+          location: '大濠公園',
+          note: '福岡城、舞鶴公園、福岡市美術館（草間彌生南瓜）、大濠公園、逛逛吃吃',
+          image: '',
+          links: [],
+        },
+        {
+          time: '17:45',
+          title: '福岡的街邊夕陽與海',
+          category: '景點',
+          location: '福岡塔 & 百道濱海灘',
+          note: '看漂亮夕陽與海景，很餓的話就找地方吃東西、不看夕陽的話：可以和上一個行程對調，比較好安排晚餐時間',
+          image: '',
+          links: [
+            {
+              label: '福岡塔',
+              url: 'https://maps.app.goo.gl/H9NTiR55AayksERK9',
+            },
+          ],
+        },
+        {
+          time: '19:00',
+          title: '享受晚餐',
+          category: '用餐',
+          location: '在機場線附近的站(大濠公園/唐人町) 吃',
+          note: '好幾個選手可以選：再來訂位',
+          image: '',
+          links: [
+            {
+              label: 'Ishihara 石原牛精肉店',
+              url: 'https://maps.app.goo.gl/ytZFega9ko5Z3DTW8',
+            },
+            {
+              label: 'WAGYU PINFU 日式燒肉餐廳',
+              url: 'https://maps.app.goo.gl/YMeo6m57EPVTfa9G8',
+            },
+            {
+              label: '博多水炊鍋専門 橙',
+              url: 'https://maps.app.goo.gl/PYwSY9o9M6TgkYxB9',
+            },
+          ],
+        },
+        {
+          time: '20:30',
+          title: '回飯店休息 & 車站地下街逛逛採買',
+          category: '住宿',
+          location: '博多車站',
+          note: '回到飯店休息、博多車站地下街逛逛、第一波伴手禮採買',
+          image: '',
+          links: [],
+        },
       ],
     },
     {
