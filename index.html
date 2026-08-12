@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="福岡三日旅行行程分享" />
+  <title>Fukuoka Trip</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="site-shell">
+    <section id="hero" class="hero" aria-labelledby="trip-title"></section>
+    <section class="overview" aria-labelledby="overview-title">
+      <div class="section-heading"><p class="eyebrow">Trip overview</p><h2 id="overview-title">旅行資訊</h2></div>
+      <div id="overview-grid" class="overview-grid"></div>
+    </section>
+    <section class="itinerary" aria-labelledby="itinerary-title">
+      <div class="section-heading"><p class="eyebrow">Itinerary</p><h2 id="itinerary-title">每日行程</h2></div>
+      <div id="day-tabs" class="day-tabs" role="tablist" aria-label="每日行程"></div>
+      <section id="day-panel" class="day-panel" role="tabpanel" tabindex="0"></section>
+    </section>
+    <footer id="footer" class="footer"></footer>
+  </main>
+  <script src="./tripData.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
