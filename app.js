@@ -10,6 +10,13 @@ function formatDateRange(trip = {}) {
 }
 function validLinks(links) { return Array.isArray(links) ? links.filter((l) => l && safeText(l.label) && safeText(l.url)) : []; }
 function getDay(days, index) { return Array.isArray(days) && days.length ? (days[index] || days[0]) : null; }
+function scheduleDetailLines(item = {}) {
+  const lines = [];
+  if (safeText(item.location)) lines.push({ className: 'schedule-location', text: `📍 ${item.location}` });
+  if (safeText(item.openingHours)) lines.push({ className: 'schedule-hours', text: `營業時間 ${item.openingHours}` });
+  if (safeText(item.note)) lines.push({ className: 'schedule-note', text: item.note });
+  return lines;
+}
 function el(tag, className, text) { const node = document.createElement(tag); if (className) node.className = className; if (text) node.textContent = text; return node; }
 function externalLink(label, url) { const a = el('a', 'link-button', label); a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer'; return a; }
 function renderHero(data) {
@@ -47,7 +54,7 @@ function renderDayPanel(day) {
   const head=el('div','day-heading'); head.append(el('div','day-icon',safeText(day.icon)||'📍')); const text=el('div'); text.append(el('p','day-date',safeText(day.date).replaceAll('-','.'))); text.append(el('h3','',safeText(day.title)||`Day ${day.day}`)); head.append(text); panel.append(head);
   const timeline=el('div','timeline'); const items=Array.isArray(day.schedule)?day.schedule:[];
   if(!items.length){ timeline.append(el('p','empty-state','這一天還沒有安排內容。')); }
-  items.forEach((item)=>{ const row=el('article','timeline-item'); row.append(el('time','timeline-time',safeText(item.time)||'--:--')); const dot=el('div','timeline-dot'); row.append(dot); const card=el('div','schedule-card'); const meta=el('div','schedule-meta'); if(safeText(item.category))meta.append(el('span','category-chip',item.category)); card.append(meta); card.append(el('h4','',safeText(item.title)||'未命名行程')); if(safeText(item.location))card.append(el('p','schedule-location',`📍 ${item.location}`)); if(safeText(item.note))card.append(el('p','schedule-note',item.note)); if(safeText(item.image)){ const img=new Image(); img.src=item.image; img.alt=`${safeText(item.title)||'行程'}圖片`; img.className='schedule-image'; img.addEventListener('error',()=>img.remove()); card.append(img); } const links=validLinks(item.links); if(links.length){ const actions=el('div','card-actions'); links.forEach((l)=>actions.append(externalLink(l.label,l.url))); card.append(actions);} row.append(card); timeline.append(row); }); panel.append(timeline);
+  items.forEach((item)=>{ const row=el('article','timeline-item'); row.append(el('time','timeline-time',safeText(item.time)||'--:--')); const dot=el('div','timeline-dot'); row.append(dot); const card=el('div','schedule-card'); const meta=el('div','schedule-meta'); if(safeText(item.category))meta.append(el('span','category-chip',item.category)); card.append(meta); card.append(el('h4','',safeText(item.title)||'未命名行程')); scheduleDetailLines(item).forEach((line)=>card.append(el('p',line.className,line.text))); if(safeText(item.image)){ const img=new Image(); img.src=item.image; img.alt=`${safeText(item.title)||'行程'}圖片`; img.className='schedule-image'; img.addEventListener('error',()=>img.remove()); card.append(img); } const links=validLinks(item.links); if(links.length){ const actions=el('div','card-actions'); links.forEach((l)=>actions.append(externalLink(l.label,l.url))); card.append(actions);} row.append(card); timeline.append(row); }); panel.append(timeline);
 }
 function renderTabs(days) {
   const root=document.getElementById('day-tabs'); root.innerHTML=''; if(!Array.isArray(days)||!days.length){ renderDayPanel(null); return; }
@@ -55,5 +62,5 @@ function renderTabs(days) {
 }
 function renderFooter(data){ const f=data.footer||{}; const root=document.getElementById('footer'); root.textContent=[safeText(f.message),safeText(f.updatedAt)?`最後更新 ${f.updatedAt}`:''].filter(Boolean).join(' · '); }
 function init(data){ renderHero(data); renderOverview(data); renderTabs(data.days||[]); renderFooter(data); }
-if (typeof module !== 'undefined' && module.exports) module.exports={formatDateRange,validLinks,getDay,safeText};
+if (typeof module !== 'undefined' && module.exports) module.exports={formatDateRange,validLinks,getDay,safeText,scheduleDetailLines};
 if (typeof document !== 'undefined' && typeof tripData !== 'undefined') init(tripData);

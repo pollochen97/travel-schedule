@@ -8,7 +8,7 @@
 - `trip`：旅行名稱、地點、開始/結束日期
 - `flights`：去程與回程航班
 - `hotel`：住宿名稱、地址、Google Maps / 官網
-- `days`：Day 1～Day 3 的時間、行程名稱、地點、備註、圖片、連結
+- `days`：Day 1～Day 3 的時間、行程名稱、地點、營業時間、備註、圖片、連結
 - `footer.updatedAt`：最後更新日期
 
 每個行程可以這樣寫：
@@ -19,6 +19,7 @@
   title: '太宰府天滿宮',
   category: '景點',
   location: '太宰府天滿宮',
+  openingHours: '06:30-18:30',
   note: '參拜、散步、吃梅枝餅。',
   image: './assets/dazaifu.jpg',
   links: [
@@ -28,7 +29,7 @@
 }
 ```
 
-不需要的 `note`、`image`、`location` 或 `links` 可以留空，網站會自動隱藏。
+不需要的 `openingHours`、`note`、`image`、`location` 或 `links` 可以留空，網站會自動隱藏。
 
 ## 更換主視覺與顏色
 

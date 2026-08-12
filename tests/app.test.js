@@ -1,7 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 
-const { formatDateRange, validLinks, getDay, safeText } = require('../app.js');
+const { formatDateRange, validLinks, getDay, safeText, scheduleDetailLines } = require('../app.js');
 
 test('formatDateRange renders a compact range for the trip dates', () => {
   assert.equal(
@@ -31,6 +31,21 @@ test('safeText turns nullish values into an empty string and trims text', () => 
   assert.equal(safeText(null), '');
   assert.equal(safeText(undefined), '');
   assert.equal(safeText('  Hakata  '), 'Hakata');
+});
+
+test('scheduleDetailLines includes openingHours between location and note', () => {
+  assert.deepEqual(
+    scheduleDetailLines({
+      location: 'いもんね博多店',
+      openingHours: '10:00-21:00',
+      note: '冰淇淋麻吉店'
+    }),
+    [
+      { className: 'schedule-location', text: '📍 いもんね博多店' },
+      { className: 'schedule-hours', text: '營業時間 10:00-21:00' },
+      { className: 'schedule-note', text: '冰淇淋麻吉店' }
+    ]
+  );
 });
 
 const fs = require('node:fs');
