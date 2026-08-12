@@ -59,6 +59,15 @@ test('browser rendering includes secure external links and accessible day tabs',
   assert.match(htmlSource, /role="tablist"/);
 });
 
+test('page declares a local SVG favicon', () => {
+  const htmlSource = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  const faviconPath = path.join(__dirname, '..', 'favicon.svg');
+
+  assert.match(htmlSource, /<link rel="icon" type="image\/svg\+xml" href="\.\/favicon\.svg" \/>/);
+  assert.equal(fs.existsSync(faviconPath), true);
+  assert.match(fs.readFileSync(faviconPath, 'utf8'), /<svg[^>]+viewBox="0 0 64 64"/);
+});
+
 test('stylesheet includes mobile safety, focus styling, and timeline/card presentation', () => {
   const css = fs.readFileSync(path.join(__dirname, '..', 'styles.css'), 'utf8');
   assert.match(css, /max-width:\s*100%/);
