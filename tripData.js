@@ -17,7 +17,7 @@ const tripData = {
   flights: {
     outbound: {
       airline: '華航',
-      flightNo: 'CI110',
+      flightNo: 'CI110 - 第二航廈',
       departureTime: '06:50',
       departureAirport: 'TPE 桃園',
       arrivalTime: '09:55',
@@ -25,7 +25,7 @@ const tripData = {
     },
     inbound: {
       airline: '華航',
-      flightNo: 'CI129',
+      flightNo: 'CI129 - 第二航廈',
       departureTime: '19:10',
       departureAirport: 'FUK 福岡',
       arrivalTime: '20:35',
@@ -49,7 +49,7 @@ const tripData = {
         {
           time: '09:55',
           title: '抵達福岡機場',
-          category: '交通',
+          category: '準備出發',
           location: '福岡機場',
           note: '入境、領行李後前往市區。',
           image: '',
@@ -71,11 +71,11 @@ const tripData = {
         },
         {
           time: '12:00',
-          title: '博多午餐 排隊吃Musashi和牛飯！',
-          category: '用餐',
-          location: '博多車站、博多運河附近吃東西',
+          title: '排隊吃和牛飯！',
+          category: '午餐',
+          location: 'Musashi 黒毛和牛 博多牛まぶし 武蔵',
           note: ' 備案：一蘭 博多運河城店(才有方形盒子)、いくら蛋包飯',
-          image: '',
+          image: 'public\\images\\Screenshot 2026-08-28 160641.png',
           links: [
             {
               label: 'Musashi 黒毛和牛 博多牛まぶし 武蔵',
@@ -108,11 +108,11 @@ const tripData = {
         },
         {
           time: '15:00',
-          title: '飯店Check In(也可以之後再入住 都可) + 小逛街',
-          category: '住宿',
-          location: '博多車站、飯店、Nintendo FUKUOKA',
+          title: '博多地下街、任天堂商店逛街(飯店check in)',
+          category: '購物',
+          location: '博多車站、Nintendo FUKUOKA',
           openingHours: 'Nintendo FUKUOKA 10:00-20:00',
-          note: '準備去公園玩的食物(微野餐)、Nintendo FUKUOKA買皮克敏、飯店check in',
+          note: '準備去公園玩的食物(微野餐)、Nintendo FUKUOKA買皮克敏',
           image: '',
           links: [
             {
@@ -130,9 +130,18 @@ const tripData = {
           title: '大濠公園 & 福岡市美術館',
           category: '景點',
           location: '大濠公園',
-          note: '福岡城、舞鶴公園、福岡市美術館（草間彌生南瓜）、大濠公園、逛逛吃吃',
-          image: '',
-          links: [],
+          note: '草間彌生南瓜·かぼちゃ屋外雕刻、福岡城、舞鶴公園、福岡市美術館（草間彌生南瓜）、大濠公園、逛逛吃吃',
+          image: 'public\\images\\Screenshot 2026-08-28 155736.png',
+          links: [
+            {
+              label: '福岡市美術館',
+              url: 'https://maps.app.goo.gl/86sJm74J1a5Hkb63A',
+            },
+            {
+              label: 'かぼちゃ屋外雕刻',
+              url: 'https://maps.app.goo.gl/EXRym6G7xuxHnr337',
+            },
+          ],
         },
         {
           time: '17:45',
@@ -203,26 +212,39 @@ const tripData = {
           category: '景點',
           location: '櫛田神社',
           note: '參拜、街道逛街',
-          image: '',
+          image: 'public\\images\\Screenshot 2026-08-28 170945.png',
           links: [
             {
               label: '櫛田神社',
-              url: 'https://www.google.com/maps/search/?api=1&query=Dazaifu+Tenmangu',
+              url: 'https://maps.app.goo.gl/VhS9JRaBxznRV6417',
             },
-            { label: '更多資訊', url: 'https://www.dazaifutenmangu.or.jp/' },
+          ],
+        },
+        {
+          time: '09:30',
+          title: '喝咖啡配麵包',
+          category: '景點',
+          location: 'Pain Stock Tenjin',
+          note: 'パンストック天神店',
+          image: '',
+          links: [
+            {
+              label: 'Pain Stock Tenjin',
+              url: 'https://maps.app.goo.gl/kCLktT9YgPyWSrY1A',
+            },
           ],
         },
         {
           time: '11:00',
           title: '排隊吃 Shin Shin 拉麵',
           category: '用餐',
-          location: '大濠公園站吃',
+          location: '博多拉麵 ShinShin 天神本店',
           note: '11:00開，看要不要提前排隊',
-          image: '',
+          image: 'public\\images\\Screenshot 2026-08-28 160032.png',
           links: [
             {
-              label: 'Shin Shin 拉麵',
-              url: 'https://maps.app.goo.gl/LbvS1sFmEMJJGfAf8',
+              label: '博多拉麵 ShinShin 天神本店',
+              url: 'https://maps.app.goo.gl/Fi3E2YnDj6tsaNpe6',
             },
           ],
         },
@@ -245,13 +267,32 @@ const tripData = {
           links: [],
         },
         {
+          time: '18:30',
+          title: "I'm donut? 福岡店",
+          category: '點心',
+          location: "I'm donut? 福岡店",
+          note: '飯後甜點',
+          image: '',
+          links: [
+            {
+              label: "I'm donut? 福岡店",
+              url: 'https://maps.app.goo.gl/jM2m4v9C1C1mHX3F7',
+            },
+          ],
+        },
+        {
           time: '19:00',
           title: '夜間散步逛街+買宵夜',
           category: '逛街',
           location: 'Mina / Muji',
           note: '如果想體驗屋台，可以晚餐後再去逛逛感受氣氛+買章魚燒之類的',
           image: '',
-          links: [],
+          links: [
+            {
+              label: 'Mina',
+              url: 'https://maps.app.goo.gl/mwWyECjxNGfU1gas9',
+            },
+          ],
         },
       ],
     },
@@ -272,6 +313,35 @@ const tripData = {
           links: [],
         },
         {
+          time: '10:00',
+          title: '完成退房、寄放行李在飯店',
+          category: '退房',
+          location: '東方飯店',
+          note: '預計15:30~16:00回飯店取行李，準備前往機場。',
+          image: '',
+          links: [],
+        },
+        {
+          time: '10:00',
+          title: 'JUMP SHOP福岡店',
+          openingHours: '10:00-21:00',
+          category: '購物',
+          location: 'JUMP SHOP福岡店',
+          note: '給小乖機會採購',
+          image: '',
+          links: [],
+        },
+        {
+          time: '10:00',
+          title: '島本明太子醬',
+          openingHours: '10:00-20:00',
+          category: '購物',
+          location: '辛子明太子島本 博多阪急店',
+          note: '博多阪急B1買，退稅要去阪急M3半層，靠近博多大門的手扶梯上去比較近',
+          image: 'public\\images\\Screenshot 2026-08-28 172816.png',
+          links: [],
+        },
+        {
           time: '11:00',
           title: '午餐',
           category: '美食',
@@ -287,11 +357,16 @@ const tripData = {
           location: '',
           note: '確認伴手禮的數量與重量、注意託運！',
           image: '',
-          links: [],
+          links: [
+            {
+              label: 'The Full Full 明太子麵包',
+              url: 'https://maps.app.goo.gl/C7vputKJKFJCYySq5',
+            },
+          ],
         },
         {
           time: '15:30',
-          title: '回飯店取行李(加上放行李托運)、準備前往機場',
+          title: '回飯店取行李(整理需托運的伴手禮)、準備前往機場',
           category: '住宿',
           location: '住宿地點',
           note: '確認伴手禮與隨身物品。',
@@ -308,10 +383,19 @@ const tripData = {
           links: [],
         },
         {
-          time: '18:10',
-          title: '19:10 搭機回台灣',
+          time: '16:00',
+          title: '博多長浜海鮮丼 うみの食堂',
+          category: '晚餐',
+          location: '博多長浜海鮮丼 うみの食堂 福岡空港店',
+          note: '朋友說超好吃，爆點兩份的海鮮丼',
+          image: '',
+          links: [],
+        },
+        {
+          time: '19:10',
+          title: '搭機回台灣',
           category: '交通',
-          location: '福岡機場',
+          location: '福岡機場 international terminal',
           note: '',
           image: '',
           links: [],
