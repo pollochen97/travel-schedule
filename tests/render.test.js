@@ -15,7 +15,7 @@ function renderPage() {
     addEventListener(name, handler) { this.listeners[name] = handler; }
     querySelectorAll() { return this.childNodes.filter((node) => node.attributes.role === 'tab'); }
   }
-  const roots = Object.fromEntries(['hero', 'overview-grid', 'reminders', 'day-tabs', 'day-panel', 'footer'].map((id) => [id, new Element('div')]));
+  const roots = Object.fromEntries(['hero', 'overview-grid', 'trip-notes', 'reminders', 'day-tabs', 'day-panel', 'footer'].map((id) => [id, new Element('div')]));
   const context = vm.createContext({
     document: { getElementById: (id) => roots[id], createElement: (tag) => new Element(tag), documentElement: { style: { setProperty() {} } } },
     Image: class extends Element { constructor() { super('img'); } },
@@ -40,6 +40,7 @@ test('Korea page renders both hotels, entry reminder, and dated overnight return
   assert.match(overview, /MFelice/);
   assert.equal(roots['overview-grid'].childNodes.length, 4);
   assert.equal(roots.reminders.hidden, false);
+  assert.equal(roots['trip-notes'].hidden, false);
   const link = roots.reminders.childNodes[0].childNodes[2].childNodes[0];
   assert.equal(link.href, 'https://www.e-arrivalcard.go.kr/portal/main/index.do');
   assert.equal(link.rel, 'noopener noreferrer');
@@ -69,6 +70,8 @@ test('existing single-hotel data and a page without reminders still render', () 
   assert.equal(roots['overview-grid'].childNodes.length, 1);
   assert.match(content(roots['overview-grid']), /Original hotel/);
   assert.equal(roots.reminders.hidden, true);
+  assert.equal(roots['trip-notes'].hidden, true);
+  assert.equal(roots['trip-notes'].open, false);
   assert.equal(roots.reminders.childNodes.length, 0);
   assert.match(content(roots['day-panel']), /目前還沒有安排每日行程/);
 });

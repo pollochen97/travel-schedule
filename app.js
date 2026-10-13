@@ -52,6 +52,7 @@ function renderOverview(data) {
 function renderReminders(reminders) {
   const root=document.getElementById('reminders'); if(!root)return; root.innerHTML='';
   const items=Array.isArray(reminders)?reminders:[]; root.hidden=!items.length;
+  const notes=document.getElementById('trip-notes'); if(notes){ notes.hidden=!items.length; if(!items.length)notes.open=false; }
   items.forEach((item)=>{ const card=el('article','info-card'); if(safeText(item.title))card.append(el('h3','',item.title)); if(safeText(item.note))card.append(el('p','muted',item.note)); const links=validLinks(item.links); if(links.length){ const actions=el('div','card-actions'); links.forEach((l)=>actions.append(externalLink(l.label,l.url))); card.append(actions); } root.append(card); });
 }
 function renderDayPanel(day) {
