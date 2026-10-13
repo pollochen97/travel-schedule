@@ -1,0 +1,44 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const { once } = require('node:events');
+const { createDevServer } = require('../dev-server');
+
+test('preview disables caching, injects reload only in served HTML, and detects saved assets', async (t) => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'travel-preview-'));
+  const html = '<html><body>Trip</body></html>';
+  fs.writeFileSync(path.join(root, 'index.html'), html);
+  fs.writeFileSync(path.join(root, 'tripData.js'), 'const tripData = {};');
+  fs.mkdirSync(path.join(root, '.git'));
+  fs.writeFileSync(path.join(root, '.git', 'config'), 'private');
+  const server = createDevServer({ root });
+  t.after(async () => {
+    server.closeAllConnections();
+    await new Promise((resolve) => server.close(resolve));
+    fs.rmSync(root, { recursive: true, force: true });
+  });
+  server.listen(0, '127.0.0.1');
+  await once(server, 'listening');
+  const base = `http://127.0.0.1:${server.address().port}`;
+  const page = await fetch(base);
+  assert.equal(page.headers.get('cache-control'), 'no-store');
+  assert.match(await page.text(), /fetch\('\/__dev\/version'/);
+  assert.equal(fs.readFileSync(path.join(root, 'index.html'), 'utf8'), html);
+  const before = await (await fetch(`${base}/__dev/version`)).json();
+  fs.writeFileSync(path.join(root, 'tripData.js'), 'const tripData = {updated: true};');
+  const after = await (await fetch(`${base}/__dev/version`)).json();
+  assert.notEqual(before.version, after.version);
+  const data = await fetch(`${base}/tripData.js`);
+  assert.equal(data.headers.get('cache-control'), 'no-store');
+  assert.match(await data.text(), /updated: true/);
+  fs.writeFileSync(path.join(root, 'photo.svg'), '<svg/>');
+  const added = await (await fetch(`${base}/__dev/version`)).json();
+  assert.notEqual(after.version, added.version);
+  fs.unlinkSync(path.join(root, 'photo.svg'));
+  const removed = await (await fetch(`${base}/__dev/version`)).json();
+  assert.notEqual(added.version, removed.version);
+  assert.equal((await fetch(`${base}/.git/config`)).status, 403);
+  assert.equal((await fetch(`${base}/missing.js`)).status, 404);
+});

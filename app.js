@@ -39,14 +39,21 @@ function renderFlight(title, flight) {
   const card=el('article','info-card'); card.append(el('p','card-kicker',title));
   const airline=[safeText(flight.airline),safeText(flight.flightNo)].filter(Boolean).join(' · '); if (airline) card.append(el('h3','',airline));
   const route=el('div','flight-route');
-  route.append(el('div','flight-stop',`${safeText(flight.departureTime)} ${safeText(flight.departureAirport)}`));
+  route.append(el('div','flight-stop',[safeText(flight.departureDate),safeText(flight.departureTime),safeText(flight.departureAirport)].filter(Boolean).join(' ')));
   route.append(el('span','route-arrow','→'));
-  route.append(el('div','flight-stop',`${safeText(flight.arrivalTime)} ${safeText(flight.arrivalAirport)}`)); card.append(route); return card;
+  route.append(el('div','flight-stop',[safeText(flight.arrivalDate),safeText(flight.arrivalTime),safeText(flight.arrivalAirport)].filter(Boolean).join(' '))); card.append(route); return card;
 }
 function renderOverview(data) {
   const root=document.getElementById('overview-grid'); root.innerHTML=''; const flights=data.flights||{};
   [renderFlight('去程航班',flights.outbound),renderFlight('回程航班',flights.inbound)].filter(Boolean).forEach((c)=>root.append(c));
-  const h=data.hotel||{}; if (Object.values(h).some((v)=>safeText(v))) { const card=el('article','info-card'); card.append(el('p','card-kicker','住宿')); if(safeText(h.name))card.append(el('h3','',h.name)); if(safeText(h.address))card.append(el('p','muted',h.address)); const actions=el('div','card-actions'); if(safeText(h.mapUrl))actions.append(externalLink('Google Maps',h.mapUrl)); if(safeText(h.websiteUrl))actions.append(externalLink('住宿官網',h.websiteUrl)); if(actions.childNodes.length)card.append(actions); root.append(card); }
+  const hotels=Array.isArray(data.hotels)?data.hotels:[data.hotel];
+  hotels.filter((h)=>h && Object.values(h).some((v)=>safeText(v))).forEach((h)=>{ const card=el('article','info-card'); card.append(el('p','card-kicker','住宿')); if(safeText(h.name))card.append(el('h3','',h.name)); if(safeText(h.address))card.append(el('p','muted',h.address)); if(safeText(h.note))card.append(el('p','muted',h.note)); const actions=el('div','card-actions'); if(safeText(h.mapUrl))actions.append(externalLink('Google Maps',h.mapUrl)); if(safeText(h.websiteUrl))actions.append(externalLink('住宿官網',h.websiteUrl)); if(actions.childNodes.length)card.append(actions); root.append(card); });
+}
+function renderReminders(reminders) {
+  const root=document.getElementById('reminders'); if(!root)return; root.innerHTML='';
+  const items=Array.isArray(reminders)?reminders:[]; root.hidden=!items.length;
+  const notes=document.getElementById('trip-notes'); if(notes){ notes.hidden=!items.length; if(!items.length)notes.open=false; }
+  items.forEach((item)=>{ const card=el('article','info-card'); if(safeText(item.title))card.append(el('h3','',item.title)); if(safeText(item.note))card.append(el('p','muted',item.note)); const links=validLinks(item.links); if(links.length){ const actions=el('div','card-actions'); links.forEach((l)=>actions.append(externalLink(l.label,l.url))); card.append(actions); } root.append(card); });
 }
 function renderDayPanel(day) {
   const panel=document.getElementById('day-panel'); panel.innerHTML='';
@@ -61,6 +68,6 @@ function renderTabs(days) {
   days.forEach((day,index)=>{ const b=el('button','day-tab'); b.type='button'; b.setAttribute('role','tab'); b.setAttribute('aria-selected',index===0?'true':'false'); b.textContent=`Day ${day.day || index+1}`; b.addEventListener('click',()=>{ root.querySelectorAll('[role="tab"]').forEach((t)=>t.setAttribute('aria-selected','false')); b.setAttribute('aria-selected','true'); renderDayPanel(day); }); root.append(b); }); renderDayPanel(getDay(days,0));
 }
 function renderFooter(data){ const f=data.footer||{}; const root=document.getElementById('footer'); root.textContent=[safeText(f.message),safeText(f.updatedAt)?`最後更新 ${f.updatedAt}`:''].filter(Boolean).join(' · '); }
-function init(data){ renderHero(data); renderOverview(data); renderTabs(data.days||[]); renderFooter(data); }
+function init(data){ renderHero(data); renderOverview(data); renderReminders(data.reminders); renderTabs(data.days||[]); renderFooter(data); }
 if (typeof module !== 'undefined' && module.exports) module.exports={formatDateRange,validLinks,getDay,safeText,scheduleDetailLines};
 if (typeof document !== 'undefined' && typeof tripData !== 'undefined') init(tripData);
